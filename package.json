@@ -1,6 +1,6 @@
 {
   "name": "soap-q",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "kriskowal's Q support for soap (node-soap)",
   "main": "index.js",
   "dependencies": {
