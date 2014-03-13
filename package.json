@@ -1,21 +1,27 @@
 {
-  "name": "soap-q",
-  "version": "0.1.0",
-  "description": "kriskowal's Q support for soap (node-soap)",
-  "main": "index.js",
-  "dependencies": {
-    "q": "~1.0.1",
-    "soap": "~0.4.0"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
+    "name": "soap-q",
+    "version": "0.1.1",
+    "description": "kriskowal's Q support for soap (node-soap)",
+    "main": "index.js",
+    "dependencies": {
+        "q": "~1.0.1",
+        "soap": "~0.4.0"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "test": "echo \"Error: no test \" && exit 1"
+    },
+    "keywords": [
     "q",
     "soap",
     "node-soap"
   ],
-  "author": "Matt Enlow",
-  "license": "MIT"
+    "homepage": "https://github.com/novaugust/soap-q",
+    "bugs": "https://github.com/novaugust/soap-q/issues",
+    "author": {
+        "name": "Matt Enlow",
+        "email": "matt@novaugust.net",
+        "url": "http://novaugust.net"
+    },
+    "license": "MIT"
 }
