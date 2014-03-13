@@ -4,8 +4,8 @@
     "description": "kriskowal's Q support for soap (node-soap)",
     "main": "index.js",
     "dependencies": {
-        "q": "~1.0.1",
-        "soap": "~0.4.0"
+        "q": "^1",
+        "soap": "^0.4"
     },
     "devDependencies": {},
     "scripts": {
