@@ -11,15 +11,15 @@ usage
 * to apply Q with default suffix 'Q':
 
 ```javascript
-var soap = require('soap-q')(require('soap'));
+var soapQ = require('soap-q')(require('soap'));
 // shortest way: soap will be loaded by soap-q
-var soap = require('soap-q')();
+var soapQ = require('soap-q')();
 ```
 
 * create Q-applied client:
 
 ```javascript
-soap.createClientQ("http://example.com/wsdl")
+soapQ.createClientQ("http://example.com/wsdl")
     .then(function(clientQ){
         /* ... use the client's nifty Q methods ...*/
     })
