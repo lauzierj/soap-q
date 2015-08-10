@@ -1,44 +1,39 @@
 var Q = require("q");
+    _ = require('lodash'),
+    soap = require('soap');
+
 var DEFAULTS = [
-    "_initializeServices",
-    "_defineService",
-    "_definePort",
-    "_defineMethod",
-    "_invoke",
-    "describe",
-    "setSecurity",
-    "setSOAPAction",
-    "setEndpoint",
-    "addSoapHeader"
+  "_initializeServices",
+  "_defineService",
+  "_definePort",
+  "_defineMethod",
+  "_invoke",
+  "describe",
+  "setSecurity",
+  "setSOAPAction",
+  "setEndpoint",
+  "addSoapHeader"
 ];
 
 function promisifyClient(client) {
-    for (var prop in client) {
-        if ("function" === typeof client[prop] && DEFAULTS.indexOf(prop) == -1) {
-            var newName = prop + "Q";
-            client[newName] = (function (oldName) {
-                return function (args, options) {
-                    var deferred = Q.defer();
-                    client[oldName](args, function (err, result) {
-                        if (err) deferred.reject(err);
-                        else deferred.resolve(result);
-                    }, options);
-                    return deferred.promise;
-                }
-            })(prop);
-        }
-    }
-}
-module.exports = function (soap) {
-    soap = soap || require("soap");
-    soap.createClientQ = function (url, cb) {
+  _.each(client, function(method, key) {
+    if(typeof method == 'function' && DEFAULTS.indexOf(key) == -1)
+      client[key] = function(args, options) {
         var deferred = Q.defer();
-        this.createClient(url, function (err, client) {
-            if (err) return deferred.reject(err);
-            promisifyClient(client);
-            deferred.resolve(client);
-        })
-        return deferred.promise;
-    }
-    return soap;
+        method(args, deferred.makeNodeResolver(), options);
+        return deferred.promise.spread(function(result, xml) {
+          return result[key + 'Result'];
+        });
+      }
+  });
+  return client;
 }
+
+var origCreateClient = soap.createClient;
+soap.createClient = function (url, options) {
+  var deferred = Q.defer();
+  origCreateClient.call(this, url, options, deferred.makeNodeResolver());
+  return deferred.promise.then(promisifyClient);
+}
+
+module.exports = soap;
